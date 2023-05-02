@@ -59,7 +59,7 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     media.write_video(video_file, frames, fps=fps)
 
 
-print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+print("GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 intermediate_path = '/intermediate'
 base_path = '/nft/video'
