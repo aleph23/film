@@ -56,8 +56,8 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     print('Interpolated frames generated, saving now as intermediate video.')
 
     ffmpeg_path = util.get_ffmpeg_path()
-    mediapy.set_ffmpeg(ffmpeg_path)
-    mediapy.write_video(video_file, frames, fps=fps)
+    media.set_ffmpeg(ffmpeg_path)
+    media.write_video(video_file, frames, fps=fps)
 
 
 intermediate_path = '/intermediate'
