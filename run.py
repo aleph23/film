@@ -74,4 +74,5 @@ for index, (frame1, frame2) in enumerate(frame_sets):
     predict_one (frame1, frame2, f'{intermediate_path}/out_{index}.mp4',30, 3, 2, 2)
 
 intermediate_videos = get_files(intermediate_path, ['.mp4'])
-concatenate_videos(intermediate_videos, f'{target_path}/out.mp4')
+if (len(intermediate_videos))
+    concatenate_videos(intermediate_videos, f'{target_path}/out.mp4')
