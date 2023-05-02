@@ -62,11 +62,11 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 intermediate_path = '/intermediate'
-target_path = '/nft/video/'
+base_path = '/nft/video/'
 
 clear_path(intermediate_path)
 
-input_files = get_files(target_path, ['.jpg'])
+input_files = get_files(base_path, ['.jpg'])
 print (f'Found {len(input_files)} input files')
 
 frame_sets = list(zip(input_files[:-1], input_files[1:]))
@@ -78,4 +78,4 @@ intermediate_videos = get_files(intermediate_path, ['.mp4'])
 print (f'Found {len(intermediate_videos)} input files')
 
 if len(intermediate_videos):
-    concatenate_videos(intermediate_videos, f'{target_path}/out.mp4')
+    concatenate_videos(intermediate_videos, f'{base_path}/out.mp4')
