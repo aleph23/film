@@ -64,7 +64,7 @@ print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 intermediate_path = '/intermediate'
 base_path = '/nft/video'
 
-#clear_path(intermediate_path)
+clear_path(intermediate_path)
 
 input_files = get_files(base_path, ['.jpg'])
 print (f'Found {len(input_files)} input files')
