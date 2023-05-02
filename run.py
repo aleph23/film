@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 import tempfile
 import tensorflow as tf
-import mediapy
+import mediapy as media
 from PIL import Image
 from eval import interpolator as interpolator_lib
 from eval import util
@@ -28,8 +28,8 @@ def concatenate_videos(mp4_files: list, target_video_file: str):
             file.write(f"file '{mp4_file}'\n")
 
     # Setze den Pfad zu ffmpeg
-    ffmpeg_path = mediapy.get_ffmpeg()
-    mediapy.set_ffmpeg(ffmpeg_path)
+    ffmpeg_path = util.get_ffmpeg_path()
+    media.set_ffmpeg(ffmpeg_path)
 
     # Führe den Befehl aus, um die Videos zusammenzufügen
     command = f"{ffmpeg_path} -f concat -safe 0 -i filelist.txt -c copy {target_video_file}"
