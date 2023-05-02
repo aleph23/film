@@ -6,8 +6,8 @@ import tensorflow as tf
 import mediapy
 from PIL import Image
 from eval import interpolator, util
-from frame_interpolation.eval import interpolator as interpolator_lib
-from frame_interpolation.eval import util
+from . import interpolator as interpolator_lib
+from . import util
 
 _UINT8_MAX_F = float(np.iinfo(np.uint8).max)
 INPUT_EXT = ['.png', '.jpg', '.jpeg']
