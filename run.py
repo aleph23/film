@@ -22,8 +22,9 @@ def get_files(path: str, extensions) -> list:
     return image_files
 
 def concatenate_videos(mp4_files: list, target_video_file: str):
+    file_name = f"{intermediate_path}/filelist.txt";
     # Erstelle eine temporäre Textdatei, die die Liste der MP4-Dateien enthält
-    with open("filelist.txt", "w") as file:
+    with open(file_name, "w") as file:
         for mp4_file in mp4_files:
             file.write(f"file '{mp4_file}'\n")
 
@@ -36,7 +37,7 @@ def concatenate_videos(mp4_files: list, target_video_file: str):
     os.system(command)
 
     # Lösche die temporäre Textdatei
-    os.remove("filelist.txt")
+    os.remove(file_name)
 
 
 def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_height, block_width):
