@@ -44,8 +44,6 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     interpolator = interpolator_lib.Interpolator("/pretrained_models/film_net/Style/saved_model", None, [block_height, block_width])
 
-    assert os.path.splitext(str(frame1))[-1] in INPUT_EXT and os.path.splitext(str(frame2))[-1] in INPUT_EXT, "Please provide png, jpg or jpeg images."
-
     # make sure 2 images are the same size
     img1 = Image.open(str(frame1))
     img2 = Image.open(str(frame2))
@@ -55,7 +53,7 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     input_frames = [str(frame1), str(frame2)]
 
     frames = list(util.interpolate_recursively_from_files(input_frames, times_to_interpolate, interpolator))
-    print('Interpolated frames generated, saving now as output video.')
+    print('Interpolated frames generated, saving now as intermediate video.')
 
     ffmpeg_path = util.get_ffmpeg_path()
     mediapy.set_ffmpeg(ffmpeg_path)
