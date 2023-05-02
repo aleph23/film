@@ -32,6 +32,4 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     mediapy.set_ffmpeg(ffmpeg_path)
     mediapy.write_video(video_file, frames, fps=fps)
 
-    return out_path
-
 predict_one ('/nft/video/frame_0000.jpg', '/nft/video/frame_0001.jpg', '/nft/video/out.mp4',30, 3, 2, 2)
