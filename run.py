@@ -9,21 +9,35 @@ from PIL import Image
 from eval import interpolator as interpolator_lib
 from eval import util
 
-_UINT8_MAX_F = float(np.iinfo(np.uint8).max)
-INPUT_EXT = ['.png', '.jpg', '.jpeg']
-INTERMEDIATE = f'/intermediate'
-
 def clear_path(path: str):
     mp4_files = glob.glob(os.path.join(path, "*.mp4"))
     for file in mp4_files:
+        print(f'   removing {file}')
         os.remove(file)
 
-def get_images(path: str) -> list:
-    INPUT_EXT = ['.png', '.jpg', '.jpeg']
+def get_files(path: str, extensions) -> list:
     all_files = os.listdir(path)
-    image_files = [os.path.join(path, file) for file in all_files if os.path.splitext(file)[1].lower() in INPUT_EXT]
+    image_files = [os.path.join(path, file) for file in all_files if os.path.splitext(file)[1].lower() in extensions]
 
     return image_files
+
+def concatenate_videos(mp4_files: list, target_video_file: str):
+    # Erstelle eine temporäre Textdatei, die die Liste der MP4-Dateien enthält
+    with open("filelist.txt", "w") as file:
+        for mp4_file in mp4_files:
+            file.write(f"file '{mp4_file}'\n")
+
+    # Setze den Pfad zu ffmpeg
+    ffmpeg_path = media.get_ffmpeg()
+    media.set_ffmpeg(ffmpeg_path)
+
+    # Führe den Befehl aus, um die Videos zusammenzufügen
+    command = f"{ffmpeg_path} -f concat -safe 0 -i filelist.txt -c copy {target_video_file}"
+    os.system(command)
+
+    # Lösche die temporäre Textdatei
+    os.remove("filelist.txt")
+
 
 def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_height, block_width):
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
@@ -47,10 +61,16 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     mediapy.write_video(video_file, frames, fps=fps)
 
 
-clear_path(INTERMEDIATE)
+intermediate_path = '/intermediate'
+target_path = '/nft/video/'
 
-input_files = get_images('/nft/video/')
+clear_path(intermediate_path)
+
+input_files = get_files(target_path, ['.jpg'])
 frame_sets = list(zip(input_files[:-1], input_files[1:]))
 
 for index, (frame1, frame2) in enumerate(frame_sets):
-    predict_one (frame1, frame2, f'{INTERMEDIATE}/out_{index}.mp4',30, 3, 2, 2)
+    predict_one (frame1, frame2, f'{intermediate_path}/out_{index}.mp4',30, 3, 2, 2)
+
+intermediate_videos = get_files(intermediate_path, ['mp4'])
+concatenate_videos(intermediate_videos, f'{target_path}/out.mp4')
