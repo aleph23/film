@@ -21,8 +21,8 @@ def clear_path(path: str):
 def get_images(path: str) -> list:
     INPUT_EXT = ['.png', '.jpg', '.jpeg']
     all_files = os.listdir(path)
-    image_files = [file for file in all_files if os.path.splitext(file)[1].lower() in INPUT_EXT]
-    
+    image_files = [os.path.join(path, file) for file in all_files if os.path.splitext(file)[1].lower() in INPUT_EXT]
+
     return image_files
 
 def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_height, block_width):
@@ -48,6 +48,7 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
 
 
 clear_path(INTERMEDIATE)
+
 input_files = get_images('/nft/video/')
 frame_sets = list(zip(input_files[:-1], input_files[1:]))
 
