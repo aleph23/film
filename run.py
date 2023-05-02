@@ -10,6 +10,19 @@ from eval import util
 
 _UINT8_MAX_F = float(np.iinfo(np.uint8).max)
 INPUT_EXT = ['.png', '.jpg', '.jpeg']
+INTERMEDIATE = f'/intermediate'
+
+def clear_path(path: str):
+    mp4_files = glob.glob(os.path.join(path, "*.mp4"))
+    for file in mp4_files:
+        os.remove(file)
+        
+def get_images(path: str) -> list:
+    INPUT_EXT = ['.png', '.jpg', '.jpeg']
+    all_files = os.listdir(path)
+    image_files = [file for file in all_files if os.path.splitext(file)[1].lower() in INPUT_EXT]
+    
+    return image_files
 
 def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_height, block_width):
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
@@ -32,4 +45,10 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     mediapy.set_ffmpeg(ffmpeg_path)
     mediapy.write_video(video_file, frames, fps=fps)
 
-predict_one ('/nft/video/frame_0000.jpg', '/nft/video/frame_0001.jpg', '/nft/video/out.mp4',30, 3, 2, 2)
+
+clear_path(INTERMEDIATE)
+input_files = get_images('/nft/video/')
+frame_sets = list(zip(input_files[:-1], input_files[1:]))
+
+for index, (frame1, frame2) in enumerate(frame_sets):
+    predict_one (frame1, frame2, f'{INTERMEDIATE}/out_{index}.mp4',30, 3, 2, 2)
