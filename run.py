@@ -19,7 +19,7 @@ def get_files(path: str, extensions) -> list:
     all_files = os.listdir(path)
     image_files = [os.path.join(path, file) for file in all_files if os.path.splitext(file)[1].lower() in extensions]
 
-    return image_files
+    return sorted(image_files)
 
 def concatenate_videos(mp4_files: list, target_video_file: str):
     file_name = f"{intermediate_path}/filelist.txt";
@@ -72,7 +72,7 @@ print (f'Found {len(input_files)} input files')
 frame_sets = list(zip(input_files[:-1], input_files[1:]))
 
 for index, (frame1, frame2) in enumerate(frame_sets):
-    predict_one (frame1, frame2, f'{intermediate_path}/out_{index}.mp4',30, 2, 2, 2)
+    predict_one (frame1, frame2, f'{intermediate_path}/out_{index}.mp4',30, 4, 2, 2)
 
 intermediate_videos = get_files(intermediate_path, ['.mp4'])
 print (f'Found {len(intermediate_videos)} input files')
