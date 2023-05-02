@@ -66,7 +66,7 @@ target_path = '/nft/video/'
 
 clear_path(intermediate_path)
 
-input_files = get_files(target_path, ['.jpg'])
+input_files = get_files(target_path, ['jpg'])
 frame_sets = list(zip(input_files[:-1], input_files[1:]))
 
 for index, (frame1, frame2) in enumerate(frame_sets):
