@@ -10,9 +10,9 @@ from eval import interpolator, util
 _UINT8_MAX_F = float(np.iinfo(np.uint8).max)
 INPUT_EXT = ['.png', '.jpg', '.jpeg']
 
-def predict(frame1, frame2, times_to_interpolate):
+def predict(frame1, frame2, times_to_interpolate, block_height, block_width):
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
-    interpolator = interpolator.Interpolator("/pretrained_models/film_net/Style/saved_model", None)
+    interpolator = interpolator_lib.Interpolator("/pretrained_models/film_net/Style/saved_model", None, [block_height, block_width])
 
     # Batched time.
     batch_dt = np.full(shape=(1,), fill_value=0.5, dtype=np.float32)
@@ -37,4 +37,4 @@ def predict(frame1, frame2, times_to_interpolate):
 
     return out_path
 
-predict ('/nft/video/frame_0000.jpg', '/nft/video/frame_0001.jpg', 3)
+predict ('/nft/video/frame_0000.jpg', '/nft/video/frame_0001.jpg', 3, 2, 2)
