@@ -28,8 +28,8 @@ def concatenate_videos(mp4_files: list, target_video_file: str):
             file.write(f"file '{mp4_file}'\n")
 
     # Setze den Pfad zu ffmpeg
-    ffmpeg_path = media.get_ffmpeg()
-    media.set_ffmpeg(ffmpeg_path)
+    ffmpeg_path = mediapy.get_ffmpeg()
+    mediapy.set_ffmpeg(ffmpeg_path)
 
     # Führe den Befehl aus, um die Videos zusammenzufügen
     command = f"{ffmpeg_path} -f concat -safe 0 -i filelist.txt -c copy {target_video_file}"
