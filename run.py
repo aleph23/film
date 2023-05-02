@@ -1,4 +1,5 @@
 import os
+import glob
 from pathlib import Path
 import numpy as np
 import tempfile
@@ -16,7 +17,7 @@ def clear_path(path: str):
     mp4_files = glob.glob(os.path.join(path, "*.mp4"))
     for file in mp4_files:
         os.remove(file)
-        
+
 def get_images(path: str) -> list:
     INPUT_EXT = ['.png', '.jpg', '.jpeg']
     all_files = os.listdir(path)
