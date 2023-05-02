@@ -33,7 +33,7 @@ def concatenate_videos(mp4_files: list, target_video_file: str):
     media.set_ffmpeg(ffmpeg_path)
 
     # Führe den Befehl aus, um die Videos zusammenzufügen
-    command = f"{ffmpeg_path} -f concat -safe 0 -i filelist.txt -c copy {target_video_file}"
+    command = f"{ffmpeg_path} -f concat -safe 0 -i {file_name} -c copy {target_video_file}"
     os.system(command)
 
     # Lösche die temporäre Textdatei
@@ -41,7 +41,6 @@ def concatenate_videos(mp4_files: list, target_video_file: str):
 
 
 def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_height, block_width):
-    print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     interpolator = interpolator_lib.Interpolator("/pretrained_models/film_net/Style/saved_model", None, [block_height, block_width])
 
     # make sure 2 images are the same size
@@ -59,6 +58,8 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     media.set_ffmpeg(ffmpeg_path)
     media.write_video(video_file, frames, fps=fps)
 
+
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 intermediate_path = '/intermediate'
 target_path = '/nft/video/'
