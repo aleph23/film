@@ -53,7 +53,7 @@ def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_hei
     input_frames = [str(frame1), str(frame2)]
 
     frames = list(util.interpolate_recursively_from_files(input_frames, times_to_interpolate, interpolator))
-    print('Interpolated frames generated, saving now as intermediate video.')
+    print(f'saving {video_file}')
 
     ffmpeg_path = util.get_ffmpeg_path()
     media.set_ffmpeg(ffmpeg_path)
@@ -66,11 +66,15 @@ target_path = '/nft/video/'
 clear_path(intermediate_path)
 
 input_files = get_files(target_path, ['.jpg'])
+print (f'Found {len(input_files)} input files')
+
 frame_sets = list(zip(input_files[:-1], input_files[1:]))
 
 for index, (frame1, frame2) in enumerate(frame_sets):
     predict_one (frame1, frame2, f'{intermediate_path}/out_{index}.mp4',30, 3, 2, 2)
 
 intermediate_videos = get_files(intermediate_path, ['.mp4'])
+print (f'Found {len(intermediate_videos)} input files')
+
 if len(intermediate_videos):
     concatenate_videos(intermediate_videos, f'{target_path}/out.mp4')
