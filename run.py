@@ -11,12 +11,9 @@ from eval import util
 _UINT8_MAX_F = float(np.iinfo(np.uint8).max)
 INPUT_EXT = ['.png', '.jpg', '.jpeg']
 
-def predict(frame1, frame2, times_to_interpolate, block_height, block_width):
+def predict_one(frame1, frame2, video_file, fps, times_to_interpolate, block_height, block_width):
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     interpolator = interpolator_lib.Interpolator("/pretrained_models/film_net/Style/saved_model", None, [block_height, block_width])
-
-    # Batched time.
-    batch_dt = np.full(shape=(1,), fill_value=0.5, dtype=np.float32)
 
     assert os.path.splitext(str(frame1))[-1] in INPUT_EXT and os.path.splitext(str(frame2))[-1] in INPUT_EXT, "Please provide png, jpg or jpeg images."
 
@@ -33,9 +30,8 @@ def predict(frame1, frame2, times_to_interpolate, block_height, block_width):
 
     ffmpeg_path = util.get_ffmpeg_path()
     mediapy.set_ffmpeg(ffmpeg_path)
-    out_path = Path(tempfile.mkdtemp()) / "out.mp4"
-    mediapy.write_video(str(out_path), frames, fps=30)
+    mediapy.write_video(video_file, frames, fps=fps)
 
     return out_path
 
-predict ('/nft/video/frame_0000.jpg', '/nft/video/frame_0001.jpg', 3, 2, 2)
+predict_one ('/nft/video/frame_0000.jpg', '/nft/video/frame_0001.jpg', '/nft/video/out.mp4',30, 3, 2, 2)
