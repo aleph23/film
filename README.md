@@ -1,3 +1,21 @@
+# MasterClasses.01 pipeline
+
+Features:
+- frame detection - `python3 formatters/lsall.py`
+- frame rename - `python3 formatters.rename.py`
+- frame interpolation - `python3 frame_gen.py`
+- mp4 generation - `python3 frame_combine.py`
+
+Directories:
+- interpolation configuration - `./config`
+- storage for interpolation models - `./pretrained_models`
+
+---
+
+#### Original documentation
+
+---
+
 # FILM: Frame Interpolation for Large Motion
 
 ### [Website](https://film-net.github.io/) | [Paper](https://arxiv.org/pdf/2202.04901.pdf) | [Google AI Blog](https://ai.googleblog.com/2022/10/large-motion-frame-interpolation.html) | [Tensorflow Hub Colab](https://www.tensorflow.org/hub/tutorials/tf_hub_film_example) | [YouTube](https://www.youtube.com/watch?v=OAD-BieIjH4) <br>
