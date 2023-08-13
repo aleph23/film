@@ -1,0 +1,194 @@
+[
+  {
+    "start": "0002",
+    "end": "0006",
+    "step": 3,
+    "desc": "User B"
+  },
+  {
+    "start": "0007",
+    "end": "0010",
+    "step": 3,
+    "desc": "User C"
+  },
+  {
+    "start": "0011",
+    "end": "0013",
+    "step": 3,
+    "desc": "User T"
+  },
+  {
+    "start": "0014",
+    "end": "0016",
+    "step": 3,
+    "desc": "A1"
+  },
+  {
+    "start": "0014",
+    "end": "0016",
+    "step": 3,
+    "desc": "A1"
+  },
+  {
+    "start": "0017",
+    "end": "0020",
+    "step": 3,
+    "desc": "Frontend B"
+  },
+  {
+    "start": "0021",
+    "end": "0024",
+    "step": 3,
+    "desc": "Frontend C"
+  },
+  {
+    "start": "0025",
+    "end": "0027",
+    "step": 3,
+    "desc": "Frontend T"
+  },
+  {
+    "start": "0028",
+    "end": "0029",
+    "step": 3,
+    "desc": "A2"
+  },
+  {
+    "start": "0030",
+    "end": "0033",
+    "step": 3,
+    "desc": "LB B"
+  },
+  {
+    "start": "0034",
+    "end": "0037",
+    "step": 3,
+    "desc": "LB C"
+  },
+  {
+    "start": "0038",
+    "end": "0040",
+    "step": 3,
+    "desc": "LB T"
+  },
+  {
+    "start": "0043",
+    "end": "0046",
+    "step": 3,
+    "desc": "Backend B"
+  },
+  {
+    "start": "0047",
+    "end": "0050",
+    "step": 3,
+    "desc": "Backend C"
+  },
+  {
+    "start": "0051",
+    "end": "0053",
+    "step": 3,
+    "desc": "Backend T"
+  },
+  {
+    "start": "0054",
+    "end": "0056",
+    "step": 3,
+    "desc": "A3"
+  },
+  {
+    "start": "0057",
+    "end": "0060",
+    "step": 3,
+    "desc": "DB B"
+  },
+  {
+    "start": "0061",
+    "end": "0064",
+    "step": 3,
+    "desc": "DB C"
+  },
+  {
+    "start": "0065",
+    "end": "0067",
+    "step": 3,
+    "desc": "DB T"
+  },
+  {
+    "start": "0068",
+    "end": "0070",
+    "step": 3,
+    "desc": "A4"
+  },
+  {
+    "start": "0071",
+    "end": "0074",
+    "step": 3,
+    "desc": "Q B"
+  },
+  {
+    "start": "0075",
+    "end": "0078",
+    "step": 3,
+    "desc": "Q C"
+  },
+  {
+    "start": "0079",
+    "end": "0081",
+    "step": 3,
+    "desc": "Q T"
+  },
+  {
+    "start": "0082",
+    "end": "0084",
+    "step": 3,
+    "desc": "A5"
+  },
+  {
+    "start": "0085",
+    "end": "0088",
+    "step": 3,
+    "desc": "API B"
+  },
+  {
+    "start": "0089",
+    "end": "0092",
+    "step": 3,
+    "desc": "API C"
+  },
+  {
+    "start": "0093",
+    "end": "0098",
+    "step": 5,
+    "desc": "API Cloud"
+  },
+  {
+    "start": "0099",
+    "end": "0101",
+    "step": 3,
+    "desc": "API T"
+  },
+  {
+    "start": "0102",
+    "end": "0111",
+    "step": 7,
+    "desc": "Cloud B"
+  },
+  {
+    "start": "0112",
+    "end": "0114",
+    "step": 3,
+    "desc": "Cloud T"
+  },
+  {
+    "start": "0115",
+    "end": "0120",
+    "step": 3,
+    "desc": "Regions B"
+  },
+  {
+    "start": "0121",
+    "end": "0123",
+    "step": 3,
+    "desc": "Regions T"
+  }
+]

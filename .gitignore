@@ -1,0 +1,5 @@
+.DS_Store
+.idea
+pretrained_models
+config/*
+!config/.gitkeep
