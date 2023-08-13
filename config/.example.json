@@ -1,0 +1,14 @@
+[
+  {
+    "start": "0002",
+    "end": "0006",
+    "step": 3,
+    "desc": "First frames of animation"
+  },
+  {
+    "start": "0007",
+    "end": "0010",
+    "step": 7,
+    "desc": "Last frames of animation"
+  }
+]
