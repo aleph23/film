@@ -2,7 +2,7 @@
 
 Features:
 - frame detection - `python3 formatters/lsall.py`
-- frame rename - `python3 formatters.rename.py`
+- frame rename - `python3 formatters/rename.py`
 - frame interpolation - `python3 frame_gen.py`
 - mp4 generation - `python3 frame_combine.py`
 
