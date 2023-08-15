@@ -1,4 +1,7 @@
 import os
+import sys
+
+PART = sys.argv[1]; assert len(PART) == 4, "Invalid arg"
 
 def lsall(_dir):
     all_ = os.listdir(_dir)
@@ -6,4 +9,4 @@ def lsall(_dir):
     for f in all_:
         print(f)
 
-lsall("~/Movies/L1S1/frames")
+lsall(f'../../Movies/{PART}/frames')

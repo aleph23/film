@@ -1,7 +1,8 @@
 import os
+import sys
 
-PART = "L1S1"
-PATH = f'~/Movies/{PART}/frames'
+PART = sys.argv[1]; assert len(PART) == 4, "Invalid arg"
+PATH = f'../../Movies/{PART}/frames'
 
 def rename():
     all_ = os.listdir(PATH)
