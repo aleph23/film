@@ -1,7 +1,8 @@
 import os
+import sys
 import cv2
 
-PART = "L1S1"
+PART = sys.argv[1]; assert len(PART) == 4, "Invalid arg"
 PATH = f'~/Movies/{PART}/frames'
 
 def get_images():

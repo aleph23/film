@@ -1,9 +1,10 @@
 import json
 import os
 import shutil
+import sys
 
-PART = "L1S1"
-PATH = f'~/Movies/{PART}/frames'
+PART = sys.argv[1]; assert len(PART) == 4, "Invalid arg"
+PATH = f'../../Movies/{PART}/frames'
 MODEL = "pretrained_models/film_net/Style/saved_model"
 
 def load_config():
