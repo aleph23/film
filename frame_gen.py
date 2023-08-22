@@ -4,7 +4,8 @@ import shutil
 import sys
 
 PART = sys.argv[1]; assert len(PART) == 4, "Invalid arg"
-PATH = f'../../Movies/{PART}/frames'
+_PATH = sys.argv[2]; assert len(_PATH) > 0, "Invalid path"
+PATH = f'{_PATH}/{PART}/frames'
 MODEL = "pretrained_models/film_net/Style/saved_model"
 
 def load_config():

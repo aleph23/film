@@ -3,7 +3,8 @@ import sys
 import cv2
 
 PART = sys.argv[1]; assert len(PART) == 4, "Invalid arg"
-PATH = f'~/Movies/{PART}/frames'
+_PATH = sys.argv[2]; assert len(_PATH) > 0, "Invalid path"
+PATH = f'{_PATH}/{PART}/frames'
 
 def get_images():
     files = os.listdir(PATH)
@@ -13,7 +14,7 @@ def get_images():
     ]
 
 def save_video(_image_files):
-    frame = cv2.imread(os.path.join(PATH, _image_files[0]))
+    frame = cv2.imread(_image_files[0])
     height, width, layers = frame.shape
     fps = 30
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
