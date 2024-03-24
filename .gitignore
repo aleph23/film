@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs
+/models/film_net/L1/saved_model
+/models/film_net/Style/saved_model
+/models/film_net/VGG/saved_model
+/models/vgg
