@@ -1,5 +1,4 @@
-# Docker base image: `gcr.io/deeplearning-platform-release/tf2-gpu.2-6:latest`
-tensorflow==2.6.2 # The latest should include tensorflow-gpu
+tensorflow==2.10 # The latest should include tensorflow-gpu
 tensorflow-datasets==4.4.0
 tensorflow-addons==0.15.0
 absl-py==0.12.0
@@ -11,3 +10,5 @@ apache-beam==2.34.0
 google-cloud-bigquery-storage==1.1.0 # Suppresses a harmless error from beam
 natsort==8.1.0
 loguru
+gdown==4.5.4
+tqdm==4.64.1

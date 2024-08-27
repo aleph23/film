@@ -76,6 +76,10 @@ import mediapy as media
 import natsort
 import numpy as np
 import tensorflow as tf
+from tqdm.auto import tqdm
+
+# Controls TF_CCP log level.
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
 from loguru import logger
 
@@ -97,6 +101,20 @@ _FPS = flags.DEFINE_integer(
     name='fps',
     default=30,
     help='Frames per second to play interpolated videos in slow motion.')
+_ALIGN = flags.DEFINE_integer(
+    name='align',
+    default=64,
+    help='If >1, pad the input size so it is evenly divisible by this value.')
+_BLOCK_HEIGHT = flags.DEFINE_integer(
+    name='block_height',
+    default=1,
+    help='An int >= 1, number of patches along height, '
+    'patch_height = height//block_height, should be evenly divisible.')
+_BLOCK_WIDTH = flags.DEFINE_integer(
+    name='block_width',
+    default=1,
+    help='An int >= 1, number of patches along width, '
+    'patch_width = width//block_width, should be evenly divisible.')    
 _OUTPUT_VIDEO = flags.DEFINE_boolean(
     name='output_video',
     default=False,
@@ -120,16 +138,16 @@ def _output_frames(frames: List[np.ndarray], frames_dir: str):
   """
   if tf.io.gfile.isdir(frames_dir):
     # to do: replace this with pathlib invocation
-    old_frames = tf.io.gfile.glob(os.path.join(frames_dir, 'frame_*.png'))
+    old_frames = tf.io.gfile.glob(f'{frames_dir}/frame_*.png')
     if old_frames:
       logging.info('Removing existing frames from %s.', frames_dir)
       for old_frame in old_frames:
         tf.io.gfile.remove(old_frame)
   else:
     tf.io.gfile.makedirs(frames_dir)
-  for idx, frame in enumerate(frames):
-    util.write_image(
-        os.path.join(frames_dir, f'frame_{idx:03d}.png'), frame)
+  for idx, frame in tqdm(
+      enumerate(frames), total=len(frames), ncols=100, colour='green'):
+    util.write_image(f'{frames_dir}/frame_{idx:03d}.png', frame)
   logging.info('Output frames saved in %s.', frames_dir)
 
 
@@ -138,7 +156,8 @@ class ProcessDirectory(beam.DoFn):
 
   def setup(self):
     self.interpolator = interpolator_lib.Interpolator(
-        _MODEL_PATH.value)
+        _MODEL_PATH.value, _ALIGN.value,
+        [_BLOCK_HEIGHT.value, _BLOCK_WIDTH.value])
 
     if _OUTPUT_VIDEO.value:
       ffmpeg_path = util.get_ffmpeg_path()
@@ -160,7 +179,7 @@ class ProcessDirectory(beam.DoFn):
     frames = list(
         util.interpolate_recursively_from_files(
             input_frames, _TIMES_TO_INTERPOLATE.value, self.interpolator))
-    _output_frames(frames, os.path.join(directory, 'interpolated_frames'))
+    _output_frames(frames, f'{directory}/interpolated_frames')
     if _OUTPUT_VIDEO.value:
       media.write_video(f'{directory}/interpolated.mp4', frames, fps=_FPS.value)
       logging.info('Output video saved at %s/interpolated.mp4.', directory)

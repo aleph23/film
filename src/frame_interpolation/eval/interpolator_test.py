@@ -26,11 +26,15 @@ The output is saved to <the directory of the input frames>/output_frame.png. If
 import os
 from typing import Sequence
 
-from . import interpolator
+from . import interpolator as interpolator_lib
 from . import util
 from absl import app
 from absl import flags
 import numpy as np
+
+# Controls TF_CCP log level.
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
+
 
 _FRAME1 = flags.DEFINE_string(
     name='frame1',
@@ -52,14 +56,27 @@ _OUTPUT_FRAME = flags.DEFINE_string(
     help='The output filepath of the interpolated mid-frame.')
 _ALIGN = flags.DEFINE_integer(
     name='align',
-    default=None,
+    default=64,
     help='If >1, pad the input size so it is evenly divisible by this value.')
+_BLOCK_HEIGHT = flags.DEFINE_integer(
+    name='block_height',
+    default=1,
+    help='An int >= 1, number of patches along height, '
+    'patch_height = height//block_height, should be evenly divisible.')
+_BLOCK_WIDTH = flags.DEFINE_integer(
+    name='block_width',
+    default=1,
+    help='An int >= 1, number of patches along width, '
+    'patch_width = width//block_width, should be evenly divisible.')
 
 
 def _run_interpolator() -> None:
   """Writes interpolated mid frame from a given two input frame filepaths."""
 
-  model_wrapper = interpolator.Interpolator(_MODEL_PATH.value, _ALIGN.value)
+  interpolator = interpolator_lib.Interpolator(
+      model_path=_MODEL_PATH.value,
+      align=_ALIGN.value,
+      block_shape=[_BLOCK_HEIGHT.value, _BLOCK_WIDTH.value])
 
   # First batched image.
   image_1 = util.read_image(_FRAME1.value)
@@ -72,19 +89,21 @@ def _run_interpolator() -> None:
   # Batched time.
   batch_dt = np.full(shape=(1,), fill_value=0.5, dtype=np.float32)
 
-  # Invoke the model once.
-  mid_frame = model_wrapper.interpolate(image_batch_1, image_batch_2,
-                                        batch_dt)[0]
+  # Invoke the model for one mid-frame interpolation.
+  mid_frame = interpolator(image_batch_1, image_batch_2, batch_dt)[0]
 
   # Write interpolated mid-frame.
   mid_frame_filepath = _OUTPUT_FRAME.value
   if not mid_frame_filepath:
-    mid_frame_filepath = os.path.join(
-        os.path.dirname(_FRAME1.value), 'output_frame.png')
+    mid_frame_filepath = f'{os.path.dirname(_FRAME1.value)}/output_frame.png'
   util.write_image(mid_frame_filepath, mid_frame)
 
 
 def main(argv: Sequence[str]) -> None:
+  print(len(argv), "arguments")
+  for i in range(len(argv)):
+    print(i, argv[i])
+   
   if len(argv) > 1:
     raise app.UsageError('Too many command-line arguments.')
   _run_interpolator()
