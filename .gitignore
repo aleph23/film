@@ -1,0 +1,30 @@
+__pycache__/frame_gen.cpython-310.pyc
+.vscode/launch.json
+eval/__pycache__/interpolator_cli.cpython-310.pyc
+eval/__pycache__/interpolator_test.cpython-310.pyc
+eval/__pycache__/interpolator.cpython-310.pyc
+eval/__pycache__/util.cpython-310.pyc
+models/film_net/L1/saved_model/keras_metadata.pb
+models/film_net/L1/saved_model/saved_model.pb
+models/film_net/L1/saved_model/variables/variables.data-00000-of-00001
+models/film_net/L1/saved_model/variables/variables.index
+models/film_net/Style/saved_model/keras_metadata.pb
+models/film_net/Style/saved_model/saved_model.pb
+models/film_net/Style/saved_model/variables/variables.data-00000-of-00001
+models/film_net/Style/saved_model/variables/variables.index
+models/film_net/VGG/saved_model/keras_metadata.pb
+models/film_net/VGG/saved_model/keras_metadata2.pb
+models/film_net/VGG/saved_model/saved_model (1).pb
+models/film_net/VGG/saved_model/saved_model.pb
+models/film_net/VGG/saved_model/variables/4x_VimeoScale_Unet_200000_G.pth
+models/film_net/VGG/saved_model/variables/variables (1).data-00000-of-00001
+models/film_net/VGG/saved_model/variables/variables.data-00000-of-00001
+models/film_net/VGG/saved_model/variables/variables.index
+models/film_net/VGG/saved_model/variables/variables2.index
+models/vgg/imagenet-vgg-verydeep-19.mat
+act.bat
+config.json
+film.code-workspace
+Pipfile
+Pipfile.lock
+pretrained_models
