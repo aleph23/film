@@ -23,14 +23,35 @@ Usage example:
 The output is saved to <the directory of the input frames>/output_frame.png. If
 `--output_frame` filepath is provided, it will be used instead.
 """
+import importlib.util
 import os
+import sys
 from typing import Sequence
 
-from . import interpolator as interpolator_lib
-from . import util
-from absl import app
-from absl import flags
 import numpy as np
+from absl import app, flags
+
+import eval.interpolator as interpolator_lib
+import eval.util as util
+
+# Controls TF_CCP log level.
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(current_dir)
+sys.path.append(parent_dir)
+
+interpolator_path = os.path.join(parent_dir, 'eval', 'interpolator.py')
+util_path = os.path.join(parent_dir, 'eval', 'util.py')
+
+# Dynamically import the module
+
+spec = importlib.util.spec_from_file_location('interpolator_lib', interpolator_path)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+
+spec = importlib.util.spec_from_file_location('util', util_path)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
 
 # Controls TF_CCP log level.
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'

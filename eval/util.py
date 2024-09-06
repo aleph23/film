@@ -13,14 +13,29 @@
 # limitations under the License.
 # ==============================================================================
 """Utility functions for frame interpolation on a set of video frames."""
+import importlib.util
 import os
 import shutil
+import sys
 from typing import Generator, Iterable, List, Optional
 
-from . import interpolator as interpolator_lib
 import numpy as np
 import tensorflow as tf
 from tqdm import tqdm
+
+# Controls TF_CCP log level.
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(current_dir)
+sys.path.append(parent_dir)
+
+interpolator_path = os.path.join(parent_dir, 'eval', 'interpolator.py')
+
+# Dynamically import the module
+
+spec = importlib.util.spec_from_file_location('interpolator', interpolator_path)
+interpolator = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(interpolator)
 
 _UINT8_MAX_F = float(np.iinfo(np.uint8).max)
 _CONFIG_FFMPEG_NAME_OR_PATH = 'ffmpeg'
@@ -61,7 +76,7 @@ def write_image(filename: str, image: np.ndarray) -> None:
 
 def _recursive_generator(
     frame1: np.ndarray, frame2: np.ndarray, num_recursions: int,
-    interpolator: interpolator_lib.Interpolator,
+    interpolator: interpolator.Interpolator,
     bar: Optional[tqdm] = None
 ) -> Generator[np.ndarray, None, None]:
   """Splits halfway to repeatedly generate more frames.
@@ -93,7 +108,7 @@ def _recursive_generator(
 
 def interpolate_recursively_from_files(
     frames: List[str], times_to_interpolate: int,
-    interpolator: interpolator_lib.Interpolator) -> Iterable[np.ndarray]:
+    interpolator: interpolator.Interpolator) -> Iterable[np.ndarray]:
   """Generates interpolated frames by repeatedly interpolating the midpoint.
 
   Loads the files on demand and uses the yield paradigm to return the frames
@@ -124,7 +139,7 @@ def interpolate_recursively_from_files(
 
 def interpolate_recursively_from_memory(
     frames: List[np.ndarray], times_to_interpolate: int,
-    interpolator: interpolator_lib.Interpolator) -> Iterable[np.ndarray]:
+    interpolator: interpolator.Interpolator) -> Iterable[np.ndarray]:
   """Generates interpolated frames by repeatedly interpolating the midpoint.
 
   This is functionally equivalent to interpolate_recursively_from_files(), but

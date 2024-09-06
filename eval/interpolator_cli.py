@@ -89,11 +89,11 @@ _PATTERN = flags.DEFINE_string(
     required=True)
 _MODEL_PATH = flags.DEFINE_string(
     name='model_path',
-    default=None,
+    default='models/film_net/Style/saved_model',
     help='The path of the TF2 saved model to use.')
 _TIMES_TO_INTERPOLATE = flags.DEFINE_integer(
     name='times_to_interpolate',
-    default=5,
+    default=3,
     help='The number of times to run recursive midpoint interpolation. '
     'The number of output frames will be 2^times_to_interpolate+1.')
 _FPS = flags.DEFINE_integer(
@@ -116,7 +116,7 @@ _BLOCK_WIDTH = flags.DEFINE_integer(
     'patch_width = width//block_width, should be evenly divisible.')    
 _OUTPUT_VIDEO = flags.DEFINE_boolean(
     name='output_video',
-    default=False,
+    default=True,
     help='If true, creates a video of the frames in the interpolated_frames/ '
     'subdirectory')
 
@@ -195,3 +195,4 @@ def main(argv: Sequence[str]) -> None:
 
 if __name__ == '__main__':
   app.run(main)
+  
