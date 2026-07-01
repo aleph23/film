@@ -5,7 +5,8 @@ Usage example:
    --folder_in1 '<folderpath of the fade from images>' \
    --folder_in2 '<folderpath of the fade to images>' \
    --folder_out '<folderpath for mid frame images>' \
-   --fade_count <number of fade levels over the length of the folders>
+   --fade_count <number of fade levels over the length of the folders> \
+   --img_idx <starting index for output files> \
    --model_path <The filepath of the TF2 saved model to use>
 """
 import os
@@ -95,6 +96,7 @@ def _run_interpolator() -> None:
 
   img_idx = _IMG_IDX.value
 
+  print("len 1 =", len(image_path_list1),", len 2 =", len(image_path_list2))
   n_files = min(len(image_path_list1), len(image_path_list2))
   mult = float(_FADE_COUNT.value - 2)/float(n_files - 1)
   offset = 1
